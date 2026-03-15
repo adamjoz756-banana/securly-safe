@@ -3,100 +3,180 @@
 <head>
   <meta charset="UTF-8">
   <title>Game Portal by banana</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"/>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
+
     body {
       background: #0a0a0f;
-      background: radial-gradient(ellipse at top, #12093a 0%, #0a0a0f 60%);
       color: white;
       font-family: Arial, sans-serif;
       min-height: 100vh;
+      overflow-x: hidden;
     }
+
+    .bg-glow {
+      position: fixed;
+      top: -200px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 800px;
+      height: 500px;
+      background: radial-gradient(ellipse, rgba(139,92,246,0.15) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
     header {
+      position: relative;
+      z-index: 1;
       text-align: center;
-      padding: 50px 20px 10px;
+      padding: 60px 20px 10px;
+      animation: fadeInDown 0.8s ease both;
     }
+
     header h1 {
-      font-size: 2.6rem;
-      letter-spacing: 3px;
+      font-size: 2.8rem;
+      letter-spacing: 4px;
       text-transform: uppercase;
-      background: linear-gradient(90deg, #a855f7, #3b82f6);
+      background: linear-gradient(90deg, #a855f7 0%, #6366f1 50%, #3b82f6 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
+
     header p {
-      color: #555;
+      color: #444;
       font-size: 0.8rem;
-      letter-spacing: 3px;
+      letter-spacing: 4px;
       text-transform: uppercase;
-      margin-top: 8px;
+      margin-top: 10px;
     }
+
     .divider {
-      width: 80px;
-      height: 3px;
+      width: 60px;
+      height: 2px;
       background: linear-gradient(90deg, #a855f7, #3b82f6);
-      margin: 20px auto 50px;
+      margin: 20px auto 60px;
       border-radius: 2px;
+      animation: fadeIn 1s ease both;
     }
+
     .grid {
+      position: relative;
+      z-index: 1;
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 28px;
-      padding: 0 40px 80px;
+      gap: 24px;
+      padding: 0 40px 100px;
     }
+
     .card {
-      width: 220px;
-      height: 180px;
-      border-radius: 18px;
+      width: 210px;
+      height: 175px;
+      border-radius: 20px;
       text-decoration: none;
       color: white;
-      font-size: 1.2rem;
-      font-weight: bold;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       gap: 14px;
-      transition: all 0.25s;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.5);
       position: relative;
       overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.07);
+      transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.3s ease, border-color 0.3s ease;
+      animation: fadeInUp 0.6s ease both;
     }
+
     .card::before {
       content: '';
       position: absolute;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(255,255,255,0.05);
-      opacity: 0;
-      transition: opacity 0.25s;
-    }
-    .card:hover::before { opacity: 1; }
-    .card:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 14px 35px rgba(0,0,0,0.7);
-    }
-    .card .emoji {
-      font-size: 3rem;
-      line-height: 1;
-    }
-    .card .label {
-      font-size: 1rem;
-      letter-spacing: 1px;
-      text-transform: uppercase;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.07) 0%, transparent 60%);
+      opacity: 1;
     }
 
-    /* Individual card colors */
-    .card-drivemad    { background: linear-gradient(135deg, #7c3aed, #4f46e5); }
-    .card-polytrack   { background: linear-gradient(135deg, #2563eb, #0ea5e9); }
-    .card-slope       { background: linear-gradient(135deg, #6d28d9, #7c3aed); }
-    .card-dino        { background: linear-gradient(135deg, #1d4ed8, #3b82f6); }
-    .card-cookie      { background: linear-gradient(135deg, #7e22ce, #a855f7); }
-    .card-flappy      { background: linear-gradient(135deg, #4338ca, #6366f1); }
-    .card-deadly      { background: linear-gradient(135deg, #1e1b4b, #4c1d95); border: 1px solid #6d28d9; }
+    .card::after {
+      content: '';
+      position: absolute;
+      bottom: -40px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 120px;
+      height: 80px;
+      background: radial-gradient(ellipse, rgba(255,255,255,0.08) 0%, transparent 70%);
+      transition: opacity 0.3s ease;
+      opacity: 0;
+    }
+
+    .card:hover {
+      transform: translateY(-8px) scale(1.03);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+      border-color: rgba(255,255,255,0.18);
+    }
+
+    .card:hover::after { opacity: 1; }
+
+    .card:nth-child(1) { animation-delay: 0.1s; }
+    .card:nth-child(2) { animation-delay: 0.15s; }
+    .card:nth-child(3) { animation-delay: 0.2s; }
+    .card:nth-child(4) { animation-delay: 0.25s; }
+    .card:nth-child(5) { animation-delay: 0.3s; }
+    .card:nth-child(6) { animation-delay: 0.35s; }
+    .card:nth-child(7) { animation-delay: 0.4s; }
+
+    .card .emoji {
+      font-size: 2.8rem;
+      line-height: 1;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
+      transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1);
+    }
+
+    .card:hover .emoji {
+      transform: scale(1.2) translateY(-2px);
+    }
+
+    .card .label {
+      font-size: 0.9rem;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      font-weight: bold;
+      opacity: 0.95;
+    }
+
+    .card-drivemad  { background: linear-gradient(145deg, #5b21b6, #4338ca); }
+    .card-polytrack { background: linear-gradient(145deg, #1d4ed8, #0369a1); }
+    .card-slope     { background: linear-gradient(145deg, #6d28d9, #5b21b6); }
+    .card-flappy    { background: linear-gradient(145deg, #3730a3, #4f46e5); }
+    .card-deadly    { background: linear-gradient(145deg, #1e1b4b, #312e81); }
+    .card-run3      { background: linear-gradient(145deg, #1e40af, #5b21b6); }
+
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-30px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+
+    @media (max-width: 600px) {
+      header h1 { font-size: 1.8rem; }
+      .card { width: 150px; height: 140px; }
+      .card .emoji { font-size: 2.2rem; }
+      .card .label { font-size: 0.75rem; }
+    }
   </style>
 </head>
 <body>
+
+  <div class="bg-glow"></div>
 
   <header>
     <h1>Game Portal by banana</h1>
@@ -121,16 +201,6 @@
       <span class="label">Slope</span>
     </a>
 
-    <a class="card card-dino" href="chromedino.html">
-      <span class="emoji">🦕</span>
-      <span class="label">Chrome Dino</span>
-    </a>
-
-    <a class="card card-cookie" href="cookieclicker.html">
-      <span class="emoji">🍪</span>
-      <span class="label">Cookie Clicker</span>
-    </a>
-
     <a class="card card-flappy" href="flappybird.html">
       <span class="emoji">🐦</span>
       <span class="label">Flappy Bird</span>
@@ -139,6 +209,11 @@
     <a class="card card-deadly" href="deadlydescent.html">
       <span class="emoji">💀</span>
       <span class="label">Deadly Descent</span>
+    </a>
+
+    <a class="card card-run3" href="run3.html">
+      <span class="emoji">🏃</span>
+      <span class="label">Run 3</span>
     </a>
 
   </div>
