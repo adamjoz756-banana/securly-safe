@@ -56,9 +56,37 @@
       width: 60px;
       height: 2px;
       background: linear-gradient(90deg, #a855f7, #3b82f6);
-      margin: 20px auto 60px;
+      margin: 20px auto 30px;
       border-radius: 2px;
       animation: fadeIn 1s ease both;
+    }
+
+    .search-wrap {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      justify-content: center;
+      margin-bottom: 40px;
+      animation: fadeIn 1s ease both;
+    }
+
+    .search-wrap input {
+      width: 320px;
+      padding: 12px 20px;
+      border-radius: 50px;
+      border: 1px solid rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.05);
+      color: white;
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.3s ease, background 0.3s ease;
+    }
+
+    .search-wrap input::placeholder { color: #555; }
+
+    .search-wrap input:focus {
+      border-color: rgba(168,85,247,0.6);
+      background: rgba(255,255,255,0.08);
     }
 
     .grid {
@@ -89,6 +117,8 @@
       animation: fadeInUp 0.6s ease both;
       cursor: pointer;
     }
+
+    .card.hidden { display: none; }
 
     .card::before {
       content: '';
@@ -124,6 +154,8 @@
     .card:nth-child(4) { animation-delay: 0.25s; }
     .card:nth-child(5) { animation-delay: 0.3s; }
     .card:nth-child(6) { animation-delay: 0.35s; }
+    .card:nth-child(7) { animation-delay: 0.4s; }
+    .card:nth-child(8) { animation-delay: 0.45s; }
 
     .card .emoji {
       font-size: 2.8rem;
@@ -144,14 +176,25 @@
       opacity: 0.95;
     }
 
+    .no-results {
+      display: none;
+      color: #444;
+      font-size: 1rem;
+      text-align: center;
+      width: 100%;
+      padding: 40px 0;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
     .card-drivemad  { background: linear-gradient(145deg, #5b21b6, #4338ca); }
     .card-polytrack { background: linear-gradient(145deg, #1d4ed8, #0369a1); }
     .card-slope     { background: linear-gradient(145deg, #6d28d9, #5b21b6); }
     .card-flappy    { background: linear-gradient(145deg, #3730a3, #4f46e5); }
     .card-deadly    { background: linear-gradient(145deg, #1e1b4b, #312e81); }
     .card-run3      { background: linear-gradient(145deg, #1e40af, #5b21b6); }
+    .card-driftboss { background: linear-gradient(145deg, #4c1d95, #6d28d9); }
 
-    /* Zoom overlay */
     .zoom-overlay {
       position: fixed;
       inset: 0;
@@ -163,9 +206,7 @@
       opacity: 0;
     }
 
-    .zoom-overlay.active {
-      pointer-events: all;
-    }
+    .zoom-overlay.active { pointer-events: all; }
 
     .zoom-card {
       width: 210px;
@@ -179,7 +220,7 @@
       color: white;
       font-family: Arial, sans-serif;
       transform: scale(1);
-      transition: transform 0.6s cubic-bezier(0.16,1,0.3,1), border-radius 0.6s ease, opacity 0.1s ease;
+      transition: transform 0.6s cubic-bezier(0.16,1,0.3,1), border-radius 0.6s ease;
     }
 
     .zoom-card.zooming {
@@ -187,17 +228,8 @@
       border-radius: 0px;
     }
 
-    .zoom-card .emoji {
-      font-size: 2.8rem;
-      line-height: 1;
-    }
-
-    .zoom-card .label {
-      font-size: 0.9rem;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      font-weight: bold;
-    }
+    .zoom-card .emoji { font-size: 2.8rem; line-height: 1; }
+    .zoom-card .label { font-size: 0.9rem; letter-spacing: 1.5px; text-transform: uppercase; font-weight: bold; }
 
     @keyframes fadeInDown {
       from { opacity: 0; transform: translateY(-30px); }
@@ -217,6 +249,7 @@
       .card { width: 150px; height: 140px; }
       .card .emoji { font-size: 2.2rem; }
       .card .label { font-size: 0.75rem; }
+      .search-wrap input { width: 260px; }
     }
   </style>
 </head>
@@ -230,41 +263,51 @@
   </header>
   <div class="divider"></div>
 
-  <div class="grid">
+  <div class="search-wrap">
+    <input type="text" id="searchInput" placeholder="Search games..." />
+  </div>
 
-    <a class="card card-drivemad" href="drivemad.html" data-emoji="🚗" data-label="Drive Mad" data-bg="linear-gradient(145deg, #5b21b6, #4338ca)">
+  <div class="grid" id="grid">
+
+    <a class="card card-drivemad" href="drivemad.html" data-emoji="🚗" data-label="Drive Mad" data-bg="linear-gradient(145deg, #5b21b6, #4338ca)" data-name="drive mad">
       <span class="emoji">🚗</span>
       <span class="label">Drive Mad</span>
     </a>
 
-    <a class="card card-polytrack" href="polytrack.html" data-emoji="🏎️" data-label="PolyTrack" data-bg="linear-gradient(145deg, #1d4ed8, #0369a1)">
+    <a class="card card-polytrack" href="polytrack.html" data-emoji="🏎️" data-label="PolyTrack" data-bg="linear-gradient(145deg, #1d4ed8, #0369a1)" data-name="polytrack">
       <span class="emoji">🏎️</span>
       <span class="label">PolyTrack</span>
     </a>
 
-    <a class="card card-slope" href="slope.html" data-emoji="🟢" data-label="Slope" data-bg="linear-gradient(145deg, #6d28d9, #5b21b6)">
+    <a class="card card-slope" href="slope.html" data-emoji="🟢" data-label="Slope" data-bg="linear-gradient(145deg, #6d28d9, #5b21b6)" data-name="slope">
       <span class="emoji">🟢</span>
       <span class="label">Slope</span>
     </a>
 
-    <a class="card card-flappy" href="flappybird.html" data-emoji="🐦" data-label="Flappy Bird" data-bg="linear-gradient(145deg, #3730a3, #4f46e5)">
+    <a class="card card-flappy" href="flappybird.html" data-emoji="🐦" data-label="Flappy Bird" data-bg="linear-gradient(145deg, #3730a3, #4f46e5)" data-name="flappy bird">
       <span class="emoji">🐦</span>
       <span class="label">Flappy Bird</span>
     </a>
 
-    <a class="card card-deadly" href="deadlydescent.html" data-emoji="💀" data-label="Deadly Descent" data-bg="linear-gradient(145deg, #1e1b4b, #312e81)">
+    <a class="card card-deadly" href="deadlydescent.html" data-emoji="💀" data-label="Deadly Descent" data-bg="linear-gradient(145deg, #1e1b4b, #312e81)" data-name="deadly descent">
       <span class="emoji">💀</span>
       <span class="label">Deadly Descent</span>
     </a>
 
-    <a class="card card-run3" href="run3.html" data-emoji="🏃" data-label="Run 3" data-bg="linear-gradient(145deg, #1e40af, #5b21b6)">
+    <a class="card card-run3" href="run3.html" data-emoji="🏃" data-label="Run 3" data-bg="linear-gradient(145deg, #1e40af, #5b21b6)" data-name="run 3">
       <span class="emoji">🏃</span>
       <span class="label">Run 3</span>
     </a>
 
+    <a class="card card-driftboss" href="driftboss.html" data-emoji="🚙" data-label="Drift Boss" data-bg="linear-gradient(145deg, #4c1d95, #6d28d9)" data-name="drift boss">
+      <span class="emoji">🚙</span>
+      <span class="label">Drift Boss</span>
+    </a>
+
   </div>
 
-  <!-- Zoom overlay -->
+  <div class="no-results" id="noResults">No games found</div>
+
   <div class="zoom-overlay" id="zoomOverlay">
     <div class="zoom-card" id="zoomCard">
       <span class="emoji" id="zoomEmoji"></span>
@@ -277,6 +320,8 @@
     const zoomCard = document.getElementById('zoomCard');
     const zoomEmoji = document.getElementById('zoomEmoji');
     const zoomLabel = document.getElementById('zoomLabel');
+    const searchInput = document.getElementById('searchInput');
+    const noResults = document.getElementById('noResults');
 
     document.querySelectorAll('.card').forEach(card => {
       card.addEventListener('click', function(e) {
@@ -303,6 +348,24 @@
           window.location.href = dest;
         }, 580);
       });
+    });
+
+    searchInput.addEventListener('input', function() {
+      const query = this.value.toLowerCase().trim();
+      const cards = document.querySelectorAll('.card');
+      let visibleCount = 0;
+
+      cards.forEach(card => {
+        const name = card.getAttribute('data-name');
+        if (name.includes(query)) {
+          card.classList.remove('hidden');
+          visibleCount++;
+        } else {
+          card.classList.add('hidden');
+        }
+      });
+
+      noResults.style.display = visibleCount === 0 ? 'block' : 'none';
     });
   </script>
 
