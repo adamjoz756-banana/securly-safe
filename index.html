@@ -2,94 +2,146 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Game Portal</title>
+  <title>Game Portal by banana</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
-      background: radial-gradient(ellipse at top, #1a1a2e 0%, #0d0d0d 70%);
+      background: #0a0a0f;
+      background: radial-gradient(ellipse at top, #12093a 0%, #0a0a0f 60%);
       color: white;
       font-family: Arial, sans-serif;
       min-height: 100vh;
     }
-    h1 {
+    header {
       text-align: center;
       padding: 50px 20px 10px;
-      font-size: 2.8rem;
-      letter-spacing: 4px;
-      background: linear-gradient(90deg, #fff 0%, #888 100%);
+    }
+    header h1 {
+      font-size: 2.6rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      background: linear-gradient(90deg, #a855f7, #3b82f6);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
-    p.sub {
-      text-align: center;
+    header p {
       color: #555;
-      margin-bottom: 50px;
-      font-size: 0.85rem;
-      letter-spacing: 2px;
+      font-size: 0.8rem;
+      letter-spacing: 3px;
       text-transform: uppercase;
+      margin-top: 8px;
+    }
+    .divider {
+      width: 80px;
+      height: 3px;
+      background: linear-gradient(90deg, #a855f7, #3b82f6);
+      margin: 20px auto 50px;
+      border-radius: 2px;
     }
     .grid {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 24px;
-      padding: 20px 40px 60px;
+      gap: 28px;
+      padding: 0 40px 80px;
     }
     .card {
-      background: linear-gradient(145deg, #1a1a1a, #111);
-      border: 1px solid #2a2a2a;
-      border-radius: 16px;
-      width: 200px;
-      padding: 30px 20px;
-      text-align: center;
+      width: 220px;
+      height: 180px;
+      border-radius: 18px;
       text-decoration: none;
       color: white;
-      font-size: 1.1rem;
+      font-size: 1.2rem;
       font-weight: bold;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
       transition: all 0.25s;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.5);
+      position: relative;
+      overflow: hidden;
     }
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(255,255,255,0.05);
+      opacity: 0;
+      transition: opacity 0.25s;
+    }
+    .card:hover::before { opacity: 1; }
     .card:hover {
-      background: linear-gradient(145deg, #222, #1a1a1a);
-      border-color: #444;
-      transform: translateY(-5px);
-      box-shadow: 0 8px 25px rgba(0,0,0,0.6);
+      transform: translateY(-6px);
+      box-shadow: 0 14px 35px rgba(0,0,0,0.7);
     }
     .card .emoji {
-      font-size: 2.5rem;
-      display: block;
-      margin-bottom: 12px;
+      font-size: 3rem;
+      line-height: 1;
     }
+    .card .label {
+      font-size: 1rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    /* Individual card colors */
+    .card-drivemad    { background: linear-gradient(135deg, #7c3aed, #4f46e5); }
+    .card-polytrack   { background: linear-gradient(135deg, #2563eb, #0ea5e9); }
+    .card-slope       { background: linear-gradient(135deg, #6d28d9, #7c3aed); }
+    .card-dino        { background: linear-gradient(135deg, #1d4ed8, #3b82f6); }
+    .card-cookie      { background: linear-gradient(135deg, #7e22ce, #a855f7); }
+    .card-flappy      { background: linear-gradient(135deg, #4338ca, #6366f1); }
+    .card-deadly      { background: linear-gradient(135deg, #1e1b4b, #4c1d95); border: 1px solid #6d28d9; }
   </style>
 </head>
 <body>
-  <h1>GAME PORTAL</h1>
-  <p class="sub">Select a game to play</p>
+
+  <header>
+    <h1>Game Portal by banana</h1>
+    <p>Select a game to play</p>
+  </header>
+  <div class="divider"></div>
+
   <div class="grid">
-    <a class="card" href="drivemad.html">
+
+    <a class="card card-drivemad" href="drivemad.html">
       <span class="emoji">🚗</span>
-      Drive Mad
+      <span class="label">Drive Mad</span>
     </a>
-    <a class="card" href="polytrack.html">
+
+    <a class="card card-polytrack" href="polytrack.html">
       <span class="emoji">🏎️</span>
-      PolyTrack
+      <span class="label">PolyTrack</span>
     </a>
-    <a class="card" href="slope.html">
+
+    <a class="card card-slope" href="slope.html">
       <span class="emoji">🟢</span>
-      Slope
+      <span class="label">Slope</span>
     </a>
-    <a class="card" href="chromedino.html">
+
+    <a class="card card-dino" href="chromedino.html">
       <span class="emoji">🦕</span>
-      Chrome Dino
+      <span class="label">Chrome Dino</span>
     </a>
-    <a class="card" href="cookieclicker.html">
+
+    <a class="card card-cookie" href="cookieclicker.html">
       <span class="emoji">🍪</span>
-      Cookie Clicker
+      <span class="label">Cookie Clicker</span>
     </a>
-    <a class="card" href="flappybird.html">
+
+    <a class="card card-flappy" href="flappybird.html">
       <span class="emoji">🐦</span>
-      Flappy Bird
+      <span class="label">Flappy Bird</span>
     </a>
+
+    <a class="card card-deadly" href="deadlydescent.html">
+      <span class="emoji">💀</span>
+      <span class="label">Deadly Descent</span>
+    </a>
+
   </div>
+
 </body>
 </html>
