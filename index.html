@@ -3,7 +3,6 @@
 <head>
   <meta charset="UTF-8">
   <title>Game Portal by banana</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"/>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -88,6 +87,7 @@
       border: 1px solid rgba(255,255,255,0.07);
       transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.3s ease, border-color 0.3s ease;
       animation: fadeInUp 0.6s ease both;
+      cursor: pointer;
     }
 
     .card::before {
@@ -95,7 +95,6 @@
       position: absolute;
       inset: 0;
       background: linear-gradient(135deg, rgba(255,255,255,0.07) 0%, transparent 60%);
-      opacity: 1;
     }
 
     .card::after {
@@ -125,7 +124,6 @@
     .card:nth-child(4) { animation-delay: 0.25s; }
     .card:nth-child(5) { animation-delay: 0.3s; }
     .card:nth-child(6) { animation-delay: 0.35s; }
-    .card:nth-child(7) { animation-delay: 0.4s; }
 
     .card .emoji {
       font-size: 2.8rem;
@@ -152,6 +150,54 @@
     .card-flappy    { background: linear-gradient(145deg, #3730a3, #4f46e5); }
     .card-deadly    { background: linear-gradient(145deg, #1e1b4b, #312e81); }
     .card-run3      { background: linear-gradient(145deg, #1e40af, #5b21b6); }
+
+    /* Zoom overlay */
+    .zoom-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+      opacity: 0;
+    }
+
+    .zoom-overlay.active {
+      pointer-events: all;
+    }
+
+    .zoom-card {
+      width: 210px;
+      height: 175px;
+      border-radius: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      color: white;
+      font-family: Arial, sans-serif;
+      transform: scale(1);
+      transition: transform 0.6s cubic-bezier(0.16,1,0.3,1), border-radius 0.6s ease, opacity 0.1s ease;
+    }
+
+    .zoom-card.zooming {
+      transform: scale(30);
+      border-radius: 0px;
+    }
+
+    .zoom-card .emoji {
+      font-size: 2.8rem;
+      line-height: 1;
+    }
+
+    .zoom-card .label {
+      font-size: 0.9rem;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      font-weight: bold;
+    }
 
     @keyframes fadeInDown {
       from { opacity: 0; transform: translateY(-30px); }
@@ -186,37 +232,79 @@
 
   <div class="grid">
 
-    <a class="card card-drivemad" href="drivemad.html">
+    <a class="card card-drivemad" href="drivemad.html" data-emoji="🚗" data-label="Drive Mad" data-bg="linear-gradient(145deg, #5b21b6, #4338ca)">
       <span class="emoji">🚗</span>
       <span class="label">Drive Mad</span>
     </a>
 
-    <a class="card card-polytrack" href="polytrack.html">
+    <a class="card card-polytrack" href="polytrack.html" data-emoji="🏎️" data-label="PolyTrack" data-bg="linear-gradient(145deg, #1d4ed8, #0369a1)">
       <span class="emoji">🏎️</span>
       <span class="label">PolyTrack</span>
     </a>
 
-    <a class="card card-slope" href="slope.html">
+    <a class="card card-slope" href="slope.html" data-emoji="🟢" data-label="Slope" data-bg="linear-gradient(145deg, #6d28d9, #5b21b6)">
       <span class="emoji">🟢</span>
       <span class="label">Slope</span>
     </a>
 
-    <a class="card card-flappy" href="flappybird.html">
+    <a class="card card-flappy" href="flappybird.html" data-emoji="🐦" data-label="Flappy Bird" data-bg="linear-gradient(145deg, #3730a3, #4f46e5)">
       <span class="emoji">🐦</span>
       <span class="label">Flappy Bird</span>
     </a>
 
-    <a class="card card-deadly" href="deadlydescent.html">
+    <a class="card card-deadly" href="deadlydescent.html" data-emoji="💀" data-label="Deadly Descent" data-bg="linear-gradient(145deg, #1e1b4b, #312e81)">
       <span class="emoji">💀</span>
       <span class="label">Deadly Descent</span>
     </a>
 
-    <a class="card card-run3" href="run3.html">
+    <a class="card card-run3" href="run3.html" data-emoji="🏃" data-label="Run 3" data-bg="linear-gradient(145deg, #1e40af, #5b21b6)">
       <span class="emoji">🏃</span>
       <span class="label">Run 3</span>
     </a>
 
   </div>
+
+  <!-- Zoom overlay -->
+  <div class="zoom-overlay" id="zoomOverlay">
+    <div class="zoom-card" id="zoomCard">
+      <span class="emoji" id="zoomEmoji"></span>
+      <span class="label" id="zoomLabel"></span>
+    </div>
+  </div>
+
+  <script>
+    const overlay = document.getElementById('zoomOverlay');
+    const zoomCard = document.getElementById('zoomCard');
+    const zoomEmoji = document.getElementById('zoomEmoji');
+    const zoomLabel = document.getElementById('zoomLabel');
+
+    document.querySelectorAll('.card').forEach(card => {
+      card.addEventListener('click', function(e) {
+        e.preventDefault();
+        const dest = this.getAttribute('href');
+        const emoji = this.getAttribute('data-emoji');
+        const label = this.getAttribute('data-label');
+        const bg = this.getAttribute('data-bg');
+
+        zoomEmoji.textContent = emoji;
+        zoomLabel.textContent = label;
+        zoomCard.style.background = bg;
+
+        overlay.style.opacity = '1';
+        overlay.classList.add('active');
+
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            zoomCard.classList.add('zooming');
+          });
+        });
+
+        setTimeout(() => {
+          window.location.href = dest;
+        }, 580);
+      });
+    });
+  </script>
 
 </body>
 </html>
