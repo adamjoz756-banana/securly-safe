@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Game Portal</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #0d0d0d;
+      color: white;
+      font-family: Arial, sans-serif;
+      min-height: 100vh;
+    }
+    h1 {
+      text-align: center;
+      padding: 40px 20px 10px;
+      font-size: 2rem;
+      letter-spacing: 2px;
+      color: #ffffff;
+    }
+    p.sub {
+      text-align: center;
+      color: #666;
+      margin-bottom: 40px;
+      font-size: 0.9rem;
+    }
+    .grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 24px;
+      padding: 20px 40px 60px;
+    }
+    .card {
+      background: #1a1a1a;
+      border: 1px solid #2a2a2a;
+      border-radius: 14px;
+      width: 200px;
+      padding: 30px 20px;
+      text-align: center;
+      text-decoration: none;
+      color: white;
+      font-size: 1.1rem;
+      font-weight: bold;
+      transition: all 0.2s;
+    }
+    .card:hover {
+      background: #222;
+      border-color: #555;
+      transform: translateY(-3px);
+    }
+    .card .emoji {
+      font-size: 2.5rem;
+      display: block;
+      margin-bottom: 12px;
+    }
+  </style>
+</head>
+<body>
+  <h1>GAME PORTAL</h1>
+  <p class="sub">Select a game to play</p>
+  <div class="grid">
+    <a class="card" href="drivemad.html">
+      <span class="emoji">🚗</span>
+      Drive Mad
+    </a>
+    <a class="card" href="polytrack.html">
+      <span class="emoji">🏎️</span>
+      PolyTrack
+    </a>
+    <a class="card" href="slope.html">
+      <span class="emoji">🟢</span>
+      Slope
+    </a>
+    <a class="card" href="bitlife.html">
+      <span class="emoji">👤</span>
+      BitLife
+    </a>
+  </div>
+</body>
+</html>
