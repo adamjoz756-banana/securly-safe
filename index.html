@@ -4,25 +4,34 @@
   <meta charset="UTF-8">
   <title>Game Portal</title>
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap');
+
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
       background: #0d0d0d;
+      background: radial-gradient(ellipse at top, #1a1a2e 0%, #0d0d0d 70%);
       color: white;
       font-family: Arial, sans-serif;
       min-height: 100vh;
     }
     h1 {
       text-align: center;
-      padding: 40px 20px 10px;
-      font-size: 2rem;
-      letter-spacing: 2px;
-      color: #ffffff;
+      padding: 50px 20px 10px;
+      font-size: 2.8rem;
+      font-family: 'Orbitron', sans-serif;
+      letter-spacing: 4px;
+      background: linear-gradient(90deg, #fff 0%, #888 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: none;
     }
     p.sub {
       text-align: center;
-      color: #666;
-      margin-bottom: 40px;
-      font-size: 0.9rem;
+      color: #555;
+      margin-bottom: 50px;
+      font-size: 0.85rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
     }
     .grid {
       display: flex;
@@ -32,9 +41,9 @@
       padding: 20px 40px 60px;
     }
     .card {
-      background: #1a1a1a;
+      background: linear-gradient(145deg, #1a1a1a, #111);
       border: 1px solid #2a2a2a;
-      border-radius: 14px;
+      border-radius: 16px;
       width: 200px;
       padding: 30px 20px;
       text-align: center;
@@ -42,12 +51,14 @@
       color: white;
       font-size: 1.1rem;
       font-weight: bold;
-      transition: all 0.2s;
+      transition: all 0.25s;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.4);
     }
     .card:hover {
-      background: #222;
-      border-color: #555;
-      transform: translateY(-3px);
+      background: linear-gradient(145deg, #222, #1a1a1a);
+      border-color: #444;
+      transform: translateY(-5px);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.6);
     }
     .card .emoji {
       font-size: 2.5rem;
@@ -71,10 +82,6 @@
     <a class="card" href="slope.html">
       <span class="emoji">🟢</span>
       Slope
-    </a>
-    <a class="card" href="bitlife.html">
-      <span class="emoji">👤</span>
-      BitLife
     </a>
     <a class="card" href="chromedino.html">
       <span class="emoji">🦕</span>
